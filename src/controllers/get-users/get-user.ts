@@ -1,0 +1,27 @@
+import { IGetUsersController, IGetUsersRepository } from "./protocols";
+
+export class GetUserController implements IGetUsersController {
+  // getUsersRepository: IGetUsersRepository;
+  // constructor(getUsersRepository: IGetUsersRepository) {
+  //   this.getUsersRepository = getUsersRepository;
+  // }
+
+  constructor(private readonly getUsersRepository: IGetUsersRepository) {}
+
+  async handle() {
+    try {
+      const users = await this.getUsersRepository.getUsers();
+
+      return {
+        statusCode: 200,
+        body: users,
+      };
+    } catch (error) {
+      return {
+        statusCode: 500,
+        body: "Something went wrong",
+      };      
+    }   
+    
+  }
+}
